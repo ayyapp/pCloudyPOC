@@ -54,7 +54,7 @@ public void swipeBasedOnDirection(String direction,int iteration)
           startX = (int) (size.width * 0.90);
           endX = (int) (size.width * 0.10);
           new TouchAction(driver)
-          .longPress(PointOption.point(startX, startY))
+          .press(PointOption.point(startX, startY))
           .waitAction(WaitOptions.waitOptions(Duration.ofMillis(2000)))
           .moveTo(PointOption.point(endX, startY))
           .release()
@@ -74,7 +74,7 @@ public void swipeBasedOnDirection(String direction,int iteration)
           .perform();
           break;
 
-      case "UP":
+      case "DOWN":
           endY = (int) (size.height * 0.90);
           startY = (int) (size.height * 0.20);
           startX = (size.width / 2);
@@ -87,13 +87,13 @@ public void swipeBasedOnDirection(String direction,int iteration)
           break;
 
 
-      case "DOWN":
+      case "UP":
           startY = (int) (size.height * 0.70);
           endY = (int) (size.height * 0.20);
           startX = (size.width / 2);
           new TouchAction(driver)
-          .longPress(PointOption.point(startX,startY))
-          .waitAction(WaitOptions.waitOptions(Duration.ofMillis(2000)))
+          .press(PointOption.point(startX,startY))
+          .waitAction(WaitOptions.waitOptions(Duration.ofMillis(750)))
           .moveTo(PointOption.point(startX, endY))
           .release()
           .perform();

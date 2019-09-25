@@ -30,6 +30,37 @@ public class PFM {
 
 	public void pfm() throws MalformedURLException, InterruptedException {
 		try {
+			
+			try {
+				if(driver.findElement(By.xpath(DataBaseConnection.getObject("lbl_Attention","PreWelcome"))).isDisplayed())
+				{
+				driver.findElement(By.xpath(DataBaseConnection.getObject("btn_OK","PersonalDetails"))).click();
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.out.println("Terms and Conditions already accepted");
+			}
+			
+			
+			try {
+				if(driver.findElement(By.xpath(DataBaseConnection.getObject("btn_Allow","LoginPage"))).isDisplayed())
+				{
+				//driver.findElement(By.xpath(DataBaseConnection.getObject("btn_Allow","LoginPage"))).click();
+				Thread.sleep(2000);
+				for (int i=0; i<=3; i++)
+				{
+					if(driver.findElement(By.xpath(DataBaseConnection.getObject("btn_Allow","LoginPage"))).isDisplayed());
+					driver.findElement(By.xpath(DataBaseConnection.getObject("btn_Allow","LoginPage"))).click();
+					Thread.sleep(1000);
+				}
+				
+			} 
+			}catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.out.println("Device Already Registerd");
+			}
+			
+			
 			Thread.sleep(6000);
 			driver.findElement(By.xpath(DataBaseConnection.getObject("lbl_Login","LoginPage"))).click();
 		
@@ -37,14 +68,12 @@ public class PFM {
 				if(driver.findElement(By.xpath(DataBaseConnection.getObject("lbl_NotYou","LoginPage"))).isDisplayed())
 				{
 					driver.findElement(By.xpath(DataBaseConnection.getObject("lbl_NotYou","LoginPage"))).click();
-				}
-				else
-				{
 					driver.findElement(By.xpath(DataBaseConnection.getObject("txt_Username","LoginPage"))).sendKeys("testnts");
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				System.out.println("Not You is displayed please enter password");
+				System.out.println("Not You is not displayed! Please enter username");
+				driver.findElement(By.xpath(DataBaseConnection.getObject("txt_Username","LoginPage"))).sendKeys("testnts");
 			}
 			
 			driver.findElement(By.xpath(DataBaseConnection.getObject("txt_Password","LoginPage"))).sendKeys("dbs123");
@@ -113,7 +142,7 @@ public class PFM {
 			assertTrue(driver.findElement(By.xpath(DataBaseConnection.getObject("txt_SetBudgetFeild","SetBudgeLimitScreen"))).isDisplayed());
 			driver.findElement(By.xpath(DataBaseConnection.getObject("txt_SetBudgetFeild","SetBudgeLimitScreen"))).clear();
 			driver.findElement(By.xpath(DataBaseConnection.getObject("txt_SetBudgetFeild","SetBudgeLimitScreen"))).click();
-			action.enterNumericKey(Randomizer.getRandomNumber());
+			action.enterNumericKey("1000");
 			
 			String actualVal=driver.findElement(By.xpath(DataBaseConnection.getObject("txt_SetBudgetFeild","SetBudgeLimitScreen"))).getText();//Need to check this
 		//	driver.findElement(By.xpath(DataBaseConnection.getObject("txt_SetBudgetFeild","SetBudgeLimitScreen"))).sendKeys();
@@ -127,6 +156,7 @@ public class PFM {
 
 		}catch (Exception e) {
 			e.printStackTrace();
+			driver.quit();
 		}
 		driver.quit();
 	}

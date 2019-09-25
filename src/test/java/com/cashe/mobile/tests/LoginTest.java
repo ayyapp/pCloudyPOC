@@ -50,7 +50,7 @@ public class LoginTest {
 			try {
 				if(driver.findElement(By.xpath(DataBaseConnection.getObject("lbl_Attention","PreWelcome"))).isDisplayed())
 				{
-				driver.findElement(By.xpath(DataBaseConnection.getObject("btn_OK","PreWelcome"))).click();
+				driver.findElement(By.xpath(DataBaseConnection.getObject("btn_OK","PersonalDetails"))).click();
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -58,15 +58,15 @@ public class LoginTest {
 			}
 			
 			
-			/*try {
+			try {
 				if(driver.findElement(By.xpath(DataBaseConnection.getObject("btn_Allow","LoginPage"))).isDisplayed())
 				{
 				//driver.findElement(By.xpath(DataBaseConnection.getObject("btn_Allow","LoginPage"))).click();
 				Thread.sleep(2000);
 				for (int i=0; i<=3; i++)
 				{
-					if(driver.findElement(By.xpath(DataBaseConnection.getObject("btn_Allow","WelcomePage"))).isDisplayed());
-					driver.findElement(By.xpath(DataBaseConnection.getObject("btn_Allow","WelcomePage"))).click();
+					if(driver.findElement(By.xpath(DataBaseConnection.getObject("btn_Allow","LoginPage"))).isDisplayed());
+					driver.findElement(By.xpath(DataBaseConnection.getObject("btn_Allow","LoginPage"))).click();
 					Thread.sleep(1000);
 				}
 				
@@ -74,7 +74,7 @@ public class LoginTest {
 			}catch (Exception e) {
 				// TODO Auto-generated catch block
 				System.out.println("Device Already Registerd");
-			}*/
+			}
 						
 			
 			//Click Action performed
@@ -212,6 +212,7 @@ public class LoginTest {
 			Thread.sleep(30000);*/
 		}catch (Exception e) {
 			e.printStackTrace();
+			driver.quit();
 		}
 		driver.quit();
 
