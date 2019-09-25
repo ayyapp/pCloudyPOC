@@ -18,22 +18,25 @@ import com.cash.utilities.Randomizer;
 
 
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 
 
 public class LoginTest {
 
-	AppiumDriver driver=null;
+	AppiumDriver<MobileElement> driver=null;
 	MB_Actions action=null;
+	String platFormName=null;
 	
 	
 	String mobile;
 	
-	public LoginTest(AppiumDriver<WebElement> driver,String platFormNm) {
+	public LoginTest(AppiumDriver<MobileElement> driver,String platFormNm) {
 		// TODO Auto-generated constructor stub
 		this.driver = driver;
 		action=new MB_Actions(driver,platFormNm);
 		this.driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		this.platFormName=platFormNm;
 	}
 
 	public void loginMb() throws MalformedURLException, InterruptedException {
@@ -43,6 +46,36 @@ public class LoginTest {
 //			launchApp();
 //			Thread.sleep(30000);
 //			driver.findElement(By.xpath("//*[@text='Login']")).click();
+			
+			try {
+				if(driver.findElement(By.xpath(DataBaseConnection.getObject("lbl_Attention","PreWelcome"))).isDisplayed())
+				{
+				driver.findElement(By.xpath(DataBaseConnection.getObject("btn_OK","PreWelcome"))).click();
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.out.println("Terms and Conditions already accepted");
+			}
+			
+			
+			/*try {
+				if(driver.findElement(By.xpath(DataBaseConnection.getObject("btn_Allow","LoginPage"))).isDisplayed())
+				{
+				//driver.findElement(By.xpath(DataBaseConnection.getObject("btn_Allow","LoginPage"))).click();
+				Thread.sleep(2000);
+				for (int i=0; i<=3; i++)
+				{
+					if(driver.findElement(By.xpath(DataBaseConnection.getObject("btn_Allow","WelcomePage"))).isDisplayed());
+					driver.findElement(By.xpath(DataBaseConnection.getObject("btn_Allow","WelcomePage"))).click();
+					Thread.sleep(1000);
+				}
+				
+			} 
+			}catch (Exception e) {
+				// TODO Auto-generated catch block
+				System.out.println("Device Already Registerd");
+			}*/
+						
 			
 			//Click Action performed
 			action.captureScreenShot("Pre Login Page");
@@ -63,7 +96,7 @@ public class LoginTest {
 
 			//Enter text
 			
-			String fullname="Swapna";
+			String fullname = "S" +Randomizer.getRandomString(5);
 			//driver.findElement(By.xpath("//*[@resource-id='com.dbs.in.digibank:id/et_full_name']/TextInputLayout/android.widget.FrameLayout/android.widget.EditText")).sendKeys(fullname);
 			driver.findElement(By.xpath(DataBaseConnection.getObject("txt_FullName","PersonalDetails"))).sendKeys(fullname);
 			
@@ -77,8 +110,16 @@ public class LoginTest {
 			Assert.assertTrue(driver.findElement(By.xpath(DataBaseConnection.getObject("lbl_Header","HowToReachYou"))).isDisplayed());
 			//driver.findElement(By.xpath(DataBaseConnection.getObject("txt_MobileNumer","HowToReachYou"))).click();
 			//Generate Random Numbers
-			mobile = "7" + Randomizer.getRandomNumber(9);		
+			mobile = Randomizer.getRandomNumber();	
+			driver.findElement(By.xpath(DataBaseConnection.getObject("txt_MobileNumer","HowToReachYou"))).click();
+			if(platFormName.equalsIgnoreCase("Android"))
+			{
+			action.enterNumericKey(mobile);
+			}
+			else if(platFormName.equalsIgnoreCase("iOS"))
+			{
 			driver.findElement(By.xpath(DataBaseConnection.getObject("txt_MobileNumer","HowToReachYou"))).sendKeys(mobile);
+			}
 			//driver.findElement(By.xpath(DataBaseConnection.getObject("txt_MobileNumer","HowToReachYou"))).hideKeyboard());
 			action.hideKeyboard();
 			
@@ -97,8 +138,8 @@ public class LoginTest {
 			driver.findElement(By.xpath(DataBaseConnection.getObject("txt_Promocode","HowToReachYou"))).sendKeys("234321");
 			action.hideKeyboard();
 			action.captureScreenShot("How To Reach You");
-			
-			driver.findElement(By.xpath(DataBaseConnection.getObject("lbl_Header","SignupOtp"))).click();
+			driver.findElement(By.xpath(DataBaseConnection.getObject("btn_Next","PersonalDetails"))).click();
+			Assert.assertTrue(driver.findElement(By.xpath(DataBaseConnection.getObject("lbl_Header","SignupOtp"))).isDisplayed());
 			driver.findElement(By.xpath(DataBaseConnection.getObject("txt_OTP","SignupOtp"))).sendKeys("123456");
 			action.hideKeyboard();
 			driver.findElement(By.xpath(DataBaseConnection.getObject("btn_Next","PersonalDetails"))).click();
@@ -114,6 +155,54 @@ public class LoginTest {
 			driver.findElement(By.xpath(DataBaseConnection.getObject("btn_Submit","SetUserPwd"))).click();
 
 			action.captureScreenShot("Login Page");
+			
+			//PFM Story:
+			
+			driver.findElement(By.xpath(DataBaseConnection.getObject("txt_Username","LoginPage"))).sendKeys("testnts");
+			driver.findElement(By.xpath(DataBaseConnection.getObject("txt_Password","LoginPage"))).sendKeys("dbs123");
+			driver.findElement(By.xpath(DataBaseConnection.getObject("btn_Login","LoginPage"))).click();
+			driver.findElement(By.xpath(DataBaseConnection.getObject("btn_HamburgerMenu","DashBoardPage"))).isDisplayed();
+			driver.findElement(By.xpath(DataBaseConnection.getObject("btn_Accept","DashBoardPage"))).click();
+			action.swipeBasedOnDirection("UP",5);
+			action.captureScreenShot("DashBoardPage");
+			driver.findElement(By.xpath(DataBaseConnection.getObject("btn_Spendings","DashBoardPage"))).click();
+			action.captureScreenShot("DashBoardPage");
+			driver.findElement(By.xpath(DataBaseConnection.getObject("lbl_Header","SpendingsScreen"))).isDisplayed();
+			driver.findElement(By.xpath(DataBaseConnection.getObject("list_Budget","SpendingsScreen"))).isDisplayed();
+			driver.findElement(By.xpath(DataBaseConnection.getObject("listItem_Bills&Utilities","SpendingsScreen"))).isDisplayed();
+			driver.findElement(By.xpath(DataBaseConnection.getObject("listItem_Bills&Utilities","SpendingsScreen"))).click();
+			action.captureScreenShot("DashBoardPage");
+			
+			driver.findElement(By.xpath(DataBaseConnection.getObject("lbl_Header","BudgetBarGraphScreen"))).isDisplayed();
+			driver.findElement(By.xpath(DataBaseConnection.getObject("btn_Edit","BudgetBarGraphScreen"))).isDisplayed();
+			driver.findElement(By.xpath(DataBaseConnection.getObject("btn_Edit","BudgetBarGraphScreen"))).click();
+			action.captureScreenShot("DashBoardPage");
+			
+			driver.findElement(By.xpath(DataBaseConnection.getObject("lbl_Header","BudgetDetailsScreen"))).isDisplayed();
+			driver.findElement(By.xpath(DataBaseConnection.getObject("lbl_BdtgtCategory","BudgetDetailsScreen"))).isDisplayed();
+			driver.findElement(By.xpath(DataBaseConnection.getObject("lbl_MaxAmount","BudgetDetailsScreen"))).isDisplayed();
+			driver.findElement(By.xpath(DataBaseConnection.getObject("lbl_Frequency","BudgetDetailsScreen"))).isDisplayed();
+			driver.findElement(By.xpath(DataBaseConnection.getObject("lbl_Notify","BudgetDetailsScreen"))).isDisplayed();
+			driver.findElement(By.xpath(DataBaseConnection.getObject("btn_EditMaxAmount","BudgetDetailsScreen"))).isDisplayed();
+			driver.findElement(By.xpath(DataBaseConnection.getObject("btn_EditFrequency","BudgetDetailsScreen"))).isDisplayed();
+			driver.findElement(By.xpath(DataBaseConnection.getObject("btn_EditNotify","BudgetDetailsScreen"))).isDisplayed();
+			driver.findElement(By.xpath(DataBaseConnection.getObject("btn_EditMaxAmount","BudgetDetailsScreen"))).click();
+			action.captureScreenShot("DashBoardPage");
+			
+			
+			driver.findElement(By.xpath(DataBaseConnection.getObject("lbl_Header","SetBudgeLimitScreen"))).isDisplayed();
+			driver.findElement(By.xpath(DataBaseConnection.getObject("txt_SetBudgetFeild","SetBudgeLimitScreen"))).isDisplayed();
+			driver.findElement(By.xpath(DataBaseConnection.getObject("txt_SetBudgetFeild","SetBudgeLimitScreen"))).click();
+			
+			action.captureScreenShot("DashBoardPage");
+			driver.findElement(By.xpath(DataBaseConnection.getObject("txt_SetBudgetFeild","SetBudgeLimitScreen"))).getText();//Need to check this
+			driver.findElement(By.xpath(DataBaseConnection.getObject("txt_SetBudgetFeild","SetBudgeLimitScreen"))).sendKeys("100000");
+			driver.findElement(By.xpath(DataBaseConnection.getObject("btn_Save","SetBudgeLimitScreen"))).click();
+			
+			action.captureScreenShot("DashBoardPage");
+			driver.findElement(By.xpath(DataBaseConnection.getObject("lbl_Header","BudgetDetailsScreen"))).isDisplayed();
+			driver.findElement(By.xpath(DataBaseConnection.getObject("btn_EditMaxAmount","BudgetDetailsScreen"))).isDisplayed();
+			
 			
 			/*Thread.sleep(10000);
 			driver.findElement(By.xpath("//*[@text='Username']")).sendKeys("ibautoreg3793");

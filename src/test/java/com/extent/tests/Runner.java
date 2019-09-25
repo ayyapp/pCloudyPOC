@@ -1,5 +1,7 @@
 package com.extent.tests;
 
+import static com.cash.utilities.DataBaseConnection.connection;
+
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
@@ -8,14 +10,12 @@ import java.util.List;
 
 import javax.naming.OperationNotSupportedException;
 
-import org.openqa.selenium.Platform;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import com.cash.utilities.DataBaseConnection;
 import com.cashe.mobile.tests.Config;
 
 import io.appium.java_client.remote.MobileBrowserType;
-import static com.cash.utilities.DataBaseConnection.connection;
 
 
 public class Runner {
@@ -31,11 +31,11 @@ public class Runner {
 	public static String PLATFORM = "android";
 	public static File WORKING_DIRECTORY = new File("Reports");
 
-	public static void main(String arr[]) throws Exception {
+	public static void main(String[] arr) throws Exception {
+		System.out.println("Inside Main Method of Runner");
 		Boolean use_pCloudy = true;
 		Config.getDeviceData();
 		if (use_pCloudy) {
-			System.out.println("Inside Main Method of Runner");
 			init_pCloudyAppiumDriver();
 
 		} else {
@@ -60,17 +60,17 @@ public class Runner {
 		
 			capabilities.setCapability("pCloudy_Username", "swapnamadhari@dbs.com");
 			capabilities.setCapability("pCloudy_ApiKey", "dm43xk4bvq3kkvj5d2zp7nh4");
-			capabilities.setCapability("pCloudy_DurationInMinutes",1);
+			capabilities.setCapability("pCloudy_DurationInMinutes",10);
 			capabilities.setCapability("pCloudy_DeviceFullName", deviceData.get("Device Name"));
 			capabilities.setCapability("automationName", "uiautomator2");
 			//capabilities.setCapability("platformVersion", deviceData.get("Platform version"));
 			capabilities.setCapability("noReset", true);
 			capabilities.setCapability("fullReset", false);
-			capabilities.setCapability("newCommandTimeout", 600);
-			capabilities.setCapability("launchTimeout", 90000);
+			capabilities.setCapability("newCommandTimeout", 1000);
+			capabilities.setCapability("launchTimeout", 100000);
 			capabilities.setCapability("appPackage", "com.dbs.in.digibank");
 			capabilities.setCapability("appActivity", "com.dbs.in.digitalbank.ui.splash.SplashActivity");
-		
+			capabilities.setCapability("sendKeyStrategy", "setValue");
 
 			/*if (PLATFORM.equalsIgnoreCase("ios")) {
 				if (aDevice.getVersion().compareTo(new Version("9.3")) >= 0)

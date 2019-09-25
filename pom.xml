@@ -162,10 +162,13 @@
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+		<!-- <dependency> <groupId>mysql</groupId> <artifactId>mysql-connector-java</artifactId> 
+			<version>8.0.16</version> </dependency> -->
+		<!-- https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client -->
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>8.0.16</version>
+			<groupId>org.mariadb.jdbc</groupId>
+			<artifactId>mariadb-java-client</artifactId>
+			<version>1.1.7</version>
 		</dependency>
 
 
@@ -183,16 +186,9 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.19.1</version>
-				<configuration>
-					<includes>
-						<mainClass>**/Runner.java</mainClass>
-					</includes>
-				</configuration>
-			</plugin>
+			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-surefire-plugin</artifactId> 
+				<version>2.19.1</version> <configuration> <mainClass>com.extent.tests.Runner</mainClass> 
+				</configuration> </plugin> -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
@@ -204,6 +200,10 @@
 							<goal>java</goal>
 						</goals>
 						<configuration>
+							<executable>java</executable>
+							<includeProjectDependencies>true</includeProjectDependencies>
+							<includePluginDependencies>true</includePluginDependencies>
+							<classpathScope>test</classpathScope>
 							<mainClass>com.extent.tests.Runner</mainClass>
 						</configuration>
 					</execution>

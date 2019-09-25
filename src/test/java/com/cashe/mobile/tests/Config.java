@@ -15,7 +15,7 @@ import com.codoid.products.fillo.Recordset;
 public class Config {
 
 	//Points to config excel preoperties required to read file
-	public static String configPath="C:\\Users\\user\\Desktop\\MyCashe\\src\\test\\resources\\config\\config.xml.xlsx";
+	public static String configPath=System.getProperty("user.dir")+"\\src\\test\\resources\\config\\config.xml.xlsx";
 	public static String deviceSheetName="DeviceSheet";
 	public static String query = "select * from "+deviceSheetName;
 	
@@ -71,8 +71,9 @@ public class Config {
 	public static void main(String[] args) {
 		HashMap<String, String> deviceData=Config.deviceList.get(0);
 		System.out.println(deviceData.get("URL"));
-		
+		System.out.println(configPath);
 	}
 	
 
+	
 }

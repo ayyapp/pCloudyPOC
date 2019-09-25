@@ -14,38 +14,42 @@ import com.cashe.base.BasePage;
 
 public class DataBaseConnection extends BasePage {
 	
-	static Connection conn;
-	static Statement st;
-	static ResultSet rs;
-	static String platformName=null;
+	public static Connection conn=null;
+	public static Statement st=null;
+	public static ResultSet rs=null;
+	public static String platformName=null;
 	
 	public DataBaseConnection(String platformNm)
 	{
 		DataBaseConnection.platformName=platformNm;
 	}
 	
-	public static void connection() throws Exception {
+	public static Connection connection() throws Exception {
 		// TODO Auto-generated constructor stub
 		try {
+			System.out.println("tetet");
 			Class.forName("org.mariadb.jdbc.Driver");
 			//conn = DriverManager.getConnection(pro.getProperty("db"), pro.getProperty("db_username"), pro.getProperty("db_password"));
 			conn = DriverManager.getConnection("jdbc:mariadb://172.16.0.49:3306/pcloudy_sample","swapna","password");
-
+			System.out.println("donee");
 			logger.debug("Database Connection Established Successfully...");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			System.out.println("Database Connection Established Successfully... "+e.getMessage());
-			Assert.assertTrue(false);
+			System.out.println("Database Connection Terminated... "+e.getLocalizedMessage());
 		}
 		 
-		
+		return conn;
 		
 	}
 	
 	public static String getObject(String object,String PageName) throws Exception
 	{
+		
 		String query="select * from pcloudy_sample.pcloudy_object_repo where Page_Name='"+PageName+"' AND Object_Name='"+object+"';";
+		conn=connection();
+		System.out.println("Connectio is ::"+conn);
 		st = conn.createStatement();
+		System.out.println("statment is ::"+st);
 		rs=st.executeQuery(query);
 		String xPath="";
 		while(rs.next())

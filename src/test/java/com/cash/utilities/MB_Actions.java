@@ -14,6 +14,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.TouchAction;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.nativekey.AndroidKey;
+import io.appium.java_client.android.nativekey.KeyEvent;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
 
@@ -22,11 +25,12 @@ public class MB_Actions {
 	static Dimension size;
 	WebDriverWait wait;
     MobileElement element;
-	AppiumDriver<WebElement> driver=null;
+	AppiumDriver<MobileElement> driver=null;
 	String platFormNm=null;
 	
 	
-	public MB_Actions(AppiumDriver<WebElement> driver,String platFormNm) {
+	
+	public MB_Actions(AppiumDriver<MobileElement> driver,String platFormNm) {
 		// TODO Auto-generated constructor stub
 		this.driver=driver;
 		this.platFormNm=platFormNm;
@@ -106,7 +110,6 @@ public void swipeBasedOnDirection(String direction,int iteration)
 		driver.hideKeyboard();
 	}
   
-  
   public void captureScreenShot(String screenShotName){
 	// Take screenshot and store as a file format             
 	 File src=((TakesScreenshot)this.driver).getScreenshotAs(OutputType.FILE);           
@@ -122,6 +125,52 @@ public void swipeBasedOnDirection(String direction,int iteration)
 	  System.out.println(e.getMessage());
 	 }
 	  }
+  
+  
+  public void enterNumericKey(String number)
+  {
+	  char[] numKeys=number.toCharArray();
+	  for(char numPad:numKeys)
+	  {  switch (numPad) {
+	  case '0':
+		  ((AndroidDriver<MobileElement>)driver).pressKey(new KeyEvent(AndroidKey.NUMPAD_0));
+		  break;
+	  case '1':
+		  ((AndroidDriver<MobileElement>)driver).pressKey(new KeyEvent(AndroidKey.NUMPAD_1));
+		  break;
+	  case '2':
+		  ((AndroidDriver<MobileElement>)driver).pressKey(new KeyEvent(AndroidKey.NUMPAD_2));
+		  break;
+	  case '3':
+		  ((AndroidDriver<MobileElement>)driver).pressKey(new KeyEvent(AndroidKey.NUMPAD_3));
+		  break;
+	  case '4':
+		  ((AndroidDriver<MobileElement>)driver).pressKey(new KeyEvent(AndroidKey.NUMPAD_4));
+		  break;	
+		  
+	  case '5':
+		  ((AndroidDriver<MobileElement>)driver).pressKey(new KeyEvent(AndroidKey.NUMPAD_5));
+		  break;
+		  
+	  case '6':
+		  ((AndroidDriver<MobileElement>)driver).pressKey(new KeyEvent(AndroidKey.NUMPAD_6));
+		  break;
+		  
+	  case '7':
+		  ((AndroidDriver<MobileElement>)driver).pressKey(new KeyEvent(AndroidKey.NUMPAD_7));
+		  break;
+		  
+	  case '8':
+		  ((AndroidDriver<MobileElement>)driver).pressKey(new KeyEvent(AndroidKey.NUMPAD_8));
+		  break;
+		  
+	  case '9':
+		  ((AndroidDriver<MobileElement>)driver).pressKey(new KeyEvent(AndroidKey.NUMPAD_9));
+		  break;
+	  }
+
+	  }
+  }
 
   
   
