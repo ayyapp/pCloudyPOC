@@ -27,11 +27,9 @@ public class DataBaseConnection extends BasePage {
 	public static Connection connection() throws Exception {
 		// TODO Auto-generated constructor stub
 		try {
-			System.out.println("tetet");
 			Class.forName("org.mariadb.jdbc.Driver");
 			//conn = DriverManager.getConnection(pro.getProperty("db"), pro.getProperty("db_username"), pro.getProperty("db_password"));
 			conn = DriverManager.getConnection("jdbc:mariadb://172.16.0.49:3306/pcloudy_sample","swapna","password");
-			System.out.println("donee");
 			logger.debug("Database Connection Established Successfully...");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

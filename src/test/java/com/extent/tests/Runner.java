@@ -55,22 +55,31 @@ public class Runner {
 			HashMap<String, String> deviceData=Config.deviceList.get(i);
 			System.out.println("Considering Desired Capabillities...");
 
+			String platform = deviceData.get("Platform Name");
+			
 			capabilities = new DesiredCapabilities();
-
 		
 			capabilities.setCapability("pCloudy_Username", "swapnamadhari@dbs.com");
 			capabilities.setCapability("pCloudy_ApiKey", "dm43xk4bvq3kkvj5d2zp7nh4");
 			capabilities.setCapability("pCloudy_DurationInMinutes",10);
 			capabilities.setCapability("pCloudy_DeviceFullName", deviceData.get("Device Name"));
-			capabilities.setCapability("automationName", "uiautomator2");
-			//capabilities.setCapability("platformVersion", deviceData.get("Platform version"));
-			capabilities.setCapability("noReset", true);
+			capabilities.setCapability("noReset", false);
 			capabilities.setCapability("fullReset", false);
 			capabilities.setCapability("newCommandTimeout", 1000);
 			capabilities.setCapability("launchTimeout", 100000);
-			capabilities.setCapability("appPackage", "com.dbs.in.digibank");
-			capabilities.setCapability("appActivity", "com.dbs.in.digitalbank.ui.splash.SplashActivity");
 			capabilities.setCapability("sendKeyStrategy", "setValue");
+			
+			if(platform.equalsIgnoreCase("android")) {
+				capabilities.setCapability("automationName", "uiautomator2");
+				capabilities.setCapability("appPackage", "com.dbs.in.digibank");
+				capabilities.setCapability("appActivity", "com.dbs.in.digitalbank.ui.splash.SplashActivity");
+			}
+			
+			if(platform.equalsIgnoreCase("ios")) {
+				capabilities.setCapability("automationName", "XCUITest");
+				capabilities.setCapability("bundleId", "com.dbs.in.digibank");
+				capabilities.setCapability("platformVersion", "12.3");
+			}
 
 			/*if (PLATFORM.equalsIgnoreCase("ios")) {
 				if (aDevice.getVersion().compareTo(new Version("9.3")) >= 0)
