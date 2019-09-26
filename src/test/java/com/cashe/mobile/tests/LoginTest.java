@@ -117,8 +117,10 @@ public class LoginTest {
 
 			//Assertion for element present
 			
-			Assert.assertTrue(driver.findElement(By.xpath(DataBaseConnection.getObject("lbl_Header","TellUsAbout"))).isDisplayed());
-			driver.findElement(By.xpath(DataBaseConnection.getObject("btn_Continue","TellUsAbout"))).click();
+			
+		    Assert.assertTrue(driver.findElement(By.xpath(DataBaseConnection.getObject("lbl_Header","TellUsAbout"))).isDisplayed());
+		    action.swipeBasedOnDirection("UP",1);
+		    driver.findElement(By.xpath(DataBaseConnection.getObject("btn_Continue","TellUsAbout"))).click();
 			action.captureScreenShot("TellUs About Page");
 			Assert.assertTrue(driver.findElement(By.xpath(DataBaseConnection.getObject("lbl_Header","PersonalDetails"))).isDisplayed());
 			

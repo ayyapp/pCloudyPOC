@@ -30,12 +30,16 @@ public class TestSuite implements Runnable {
 		try {
 			try {
 				driver = new TestSetup().LaunchApp(endpoint, capabilities, platFormNm);
+				
+				
 				LoginTest loginTest = new LoginTest(driver,platFormNm);
 				Thread.sleep(5000);
 				loginTest.loginMbScenario1();
 				driver.launchApp();
 				Thread.sleep(5000);
 				loginTest.loginMbE2E();
+				
+				
 				PFM pfm = new PFM(driver, platFormNm);
 				driver.launchApp();
 				Thread.sleep(5000);
