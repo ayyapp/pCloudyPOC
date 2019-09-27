@@ -32,6 +32,7 @@ public class LoginTest {
 	}
 	
 	public void loginMbScenario1() throws MalformedURLException, InterruptedException {
+		
 		try {
 			try {
 				if(driver.findElement(By.xpath(DataBaseConnection.getObject("lbl_Attention","PreWelcome"))).isDisplayed())
@@ -79,6 +80,7 @@ public class LoginTest {
 //			launchApp();
 //			Thread.sleep(30000);
 //			driver.findElement(By.xpath("//*[@text='Login']")).click();
+		//Scenario 1	
 			try {
 				if(driver.findElement(By.xpath(DataBaseConnection.getObject("lbl_Attention","PreWelcome"))).isDisplayed())
 				{
@@ -124,6 +126,9 @@ public class LoginTest {
 			action.captureScreenShot("TellUs About Page");
 			Assert.assertTrue(driver.findElement(By.xpath(DataBaseConnection.getObject("lbl_Header","PersonalDetails"))).isDisplayed());
 			
+			
+			//Scenario 2:
+			
 			//Radio button selection
 			driver.findElement(By.xpath(DataBaseConnection.getObject("btn_Ms","PersonalDetails"))).click();
 			//driver.findElement(By.xpath(DataBaseConnection.getObject("lbl_UserName","PersonalDetails"))).click();
@@ -141,6 +146,8 @@ public class LoginTest {
 			driver.findElement(By.xpath(DataBaseConnection.getObject("btn_Next","PersonalDetails"))).click();
 			action.captureScreenShot("How to Reach You Page");
 			
+			
+			//Scenario 3
 			Assert.assertTrue(driver.findElement(By.xpath(DataBaseConnection.getObject("lbl_Header","HowToReachYou"))).isDisplayed());
 			//driver.findElement(By.xpath(DataBaseConnection.getObject("txt_MobileNumer","HowToReachYou"))).click();
 			//Generate Random Numbers
@@ -173,12 +180,21 @@ public class LoginTest {
 			action.hideKeyboard();
 			action.captureScreenShot("How To Reach You");
 			driver.findElement(By.xpath(DataBaseConnection.getObject("btn_Next","PersonalDetails"))).click();
+			
+			//Scenario 4:
 			Assert.assertTrue(driver.findElement(By.xpath(DataBaseConnection.getObject("lbl_Header","SignupOtp"))).isDisplayed());
+			Thread.sleep(120000);
+			driver.findElement(By.xpath(DataBaseConnection.getObject("txt_ResendOtp","SignupOtp"))).click();
+			
+			
+			//Scenario 5:
 			driver.findElement(By.xpath(DataBaseConnection.getObject("txt_OTP","SignupOtp"))).sendKeys("123456");
 			action.hideKeyboard();
 			driver.findElement(By.xpath(DataBaseConnection.getObject("btn_Next","PersonalDetails"))).click();
 			action.captureScreenShot("Sign Up Otp");
 			
+			
+			//Scenario 6:
 			String username= "N" + Randomizer.getRandomString(9);
 			driver.findElement(By.xpath(DataBaseConnection.getObject("txt_UserName","SetUserPwd"))).sendKeys(username);
 			action.hideKeyboard();
@@ -189,6 +205,10 @@ public class LoginTest {
 			driver.findElement(By.xpath(DataBaseConnection.getObject("btn_Submit","SetUserPwd"))).click();
 
 			action.captureScreenShot("Login Page");
+			
+			//Scenario 7:
+			Assert.assertTrue(driver.findElement(By.xpath(DataBaseConnection.getObject("lbl_Header","PAN"))).isDisplayed());
+			action.captureScreenShot("PAN Screen");
 			driver.closeApp();
 			
 		}catch (Throwable e) {
